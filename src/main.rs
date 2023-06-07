@@ -37,6 +37,8 @@ fn input_coord() -> usize {
 
 fn main() {
     let mut ttt = TTT::new();
+    ttt.player = -1;
+    ttt.apply_move(ttt.best_move(9));
     while ttt.evaluate() == 0 && !ttt.board_full() {
         println!("Deep evaluation: {}", ttt.deep_evaluate(9));
         for y in 0..3 {
@@ -45,14 +47,19 @@ fn main() {
             }
             println!();
         } 
-        let m = if ttt.player == -1 {
+        let m = if ttt.player == 1 {
+            loop {
                 let x = input_coord();
                 let y = input_coord();
-                (x, y)
-
-            } else {
-                ttt.best_move(9)
-            };
+                if ttt.board[x][y] == 0 {
+                    break (x, y);
+                } else {
+                    println!("Tile not empty!");
+                }
+            }
+        } else {
+            ttt.best_move(9)
+        };
 
         ttt.apply_move(m);
 
