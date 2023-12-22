@@ -1,7 +1,7 @@
 mod ttt;
 
 use ttt::*;
-use std::io;
+use std::io::{self, Write};
 
 fn ttt_to_string(x: i8) -> String {
     String::from(match x {
@@ -49,7 +49,11 @@ fn main() {
         } 
         let m = if ttt.player == 1 {
             loop {
+                print!("X: ");
+                io::stdout().flush().unwrap();
                 let x = input_coord();
+                print!("Y: ");
+                io::stdout().flush().unwrap();
                 let y = input_coord();
                 if ttt.board[x][y] == 0 {
                     break (x, y);

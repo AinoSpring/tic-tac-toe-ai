@@ -54,13 +54,8 @@ impl TTT {
                         .apply_move(m)
                         .deep_evaluate(depth - 1)
                 })
-                .fold(-self.player, |x, y| {
-                    if x * self.player > y * self.player {
-                        x
-                    } else {
-                        y
-                    }
-                })
+                .max_by(|x, y| (x * self.player).cmp(&(y * self.player)))
+                .unwrap()
         }
     }
 
